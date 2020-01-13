@@ -1,5 +1,6 @@
 
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 
 
 public class pig extends soldier {
@@ -9,13 +10,13 @@ public class pig extends soldier {
     }
 
     @Override
-    public void attack() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void move(Rectangle var) {
+         if(hitbox.intersects(var)){
+            xloc=xloc;
+        } else{
+           xloc-=1;
+        }
     }
-
-    @Override
-    public void move() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
     
 }

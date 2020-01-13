@@ -1,31 +1,47 @@
-
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
 
 public class button {
+
     private Rectangle button;
-    private String privname,s;
+    private String privname, s, s2;
     private int xloc, yloc;
-    
-    public button(int x, int y, String name, int lvl){
+
+    public button(int x, int y, String name, int cost, int lvl) {
         xloc = x;
         yloc = y;
         privname = name;
-        button = new Rectangle(xloc,yloc,100,100);
+        button = new Rectangle(xloc, yloc, 190, 50);
         s = privname + " lvl " + lvl;
+        s2 = "Cost: " + cost;
     }
-    public void draw(Graphics g){
+
+    public void draw(Graphics g) {
         g.setColor(Color.black);
         g.fill(button);
         g.draw(button);
         g.setColor(Color.white);
-        g.drawString(s, xloc+5, yloc+5);
-        
+        g.drawString(s, xloc + 5, yloc + 5);
+        g.drawString(s2, xloc + 5, yloc + 25);
+
     }
-    
-    
-    public void update(int lvl){
+
+    public boolean isHit(GameContainer gc) {
+        Input in = gc.getInput();
+        int mx = in.getMouseX();
+        int my = in.getMouseY();
+        if (in.isMousePressed(Input.MOUSE_LEFT_BUTTON) &&button.contains(my, my)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void update(int cost, int lvl) {
         s = privname + " lvl " + lvl;
+        s2 = "Cost: " + cost;
     }
 }

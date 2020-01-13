@@ -1,5 +1,6 @@
 
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 
 
 public class human extends soldier{
@@ -8,14 +9,14 @@ public class human extends soldier{
         super(x, y, s);
     }
     
-    @Override
-    public void attack() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
-    public void move() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void move(Rectangle var) {
+        if(hitbox.intersects(var)){
+            ani.stop();
+        } else{
+           xloc+=1;
+        }
     }
     
 }
