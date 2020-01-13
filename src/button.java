@@ -6,7 +6,7 @@ import org.newdawn.slick.geom.Rectangle;
 
 public class button {
 
-    private Rectangle button;
+    private Rectangle b;
     private String privname, s, s2;
     private int xloc, yloc;
 
@@ -14,15 +14,15 @@ public class button {
         xloc = x;
         yloc = y;
         privname = name;
-        button = new Rectangle(xloc, yloc, 190, 50);
+        b = new Rectangle(xloc, yloc, 190, 50);
         s = privname + " lvl " + lvl;
         s2 = "Cost: " + cost;
     }
 
     public void draw(Graphics g) {
         g.setColor(Color.black);
-        g.fill(button);
-        g.draw(button);
+        g.fill(b);
+        g.draw(b);
         g.setColor(Color.white);
         g.drawString(s, xloc + 5, yloc + 5);
         g.drawString(s2, xloc + 5, yloc + 25);
@@ -33,7 +33,7 @@ public class button {
         Input in = gc.getInput();
         int mx = in.getMouseX();
         int my = in.getMouseY();
-        if (in.isMousePressed(Input.MOUSE_LEFT_BUTTON) &&button.contains(my, my)) {
+        if (in.isMousePressed(Input.MOUSE_LEFT_BUTTON) &&b.contains(mx, my)) {
             return true;
         } else {
             return false;

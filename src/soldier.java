@@ -13,6 +13,7 @@ public abstract class soldier {
     protected Image attack[] = new Image[3];
     protected Animation ani, attani;
     protected int xloc, yloc;
+    protected boolean var = true;
 
     public soldier(int x, int y, String s) throws SlickException {
         soldspr = new SpriteSheet(s, 64, 64);
@@ -36,13 +37,12 @@ public abstract class soldier {
     }
     abstract public void move(Rectangle var);
 
-    public void draw(boolean var) {
-        if(var == true){
+    public void draw() {
+        if(var==true){
         ani.start();
         hitbox = new Rectangle(xloc, yloc, 64, 64);
         ani.draw(hitbox.getX(), hitbox.getY());
-        } else{
-            ani.stop();
+            System.out.println(var);
         }
     }
     
@@ -53,6 +53,12 @@ public abstract class soldier {
             return false;
         }   
     }
+    
+    public void stopani(){
+        ani.stop();
+        var=false;
+        System.out.println(var);
+    }
 
 
     public void attackdraw() {
@@ -60,6 +66,9 @@ public abstract class soldier {
         attani.start();
         hitbox = new Rectangle(xloc, yloc, 64, 64);
         attani.draw(hitbox.getX(), hitbox.getY());
+    }
+    public int getX(){
+        return xloc;
     }
 
 

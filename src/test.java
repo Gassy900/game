@@ -10,7 +10,8 @@ public class test extends BasicGame {
     Rectangle grass, sky;
     button spwn;
     ArrayList<soldier> humsoldier = new ArrayList<soldier>();
-    boolean var = true, yeet = true;
+    String bases, farms, soldiers;
+    int basei = 1, farmi = 1, soldieri = 1;
 
     public test(String title) {
         super(title);
@@ -23,17 +24,20 @@ public class test extends BasicGame {
         hfarm = new farm(0, 500, "data/Farm.png");
         pfarm = new farm(1000, 500, "data/Farm.png");
         pbase = new base(800, 500, "data/basep.png");
-        spwn = new button(100, 100, "Spawn Soldier", 50, 1);
 
         grass = new Rectangle(0, 700, 1200, 200);
         sky = new Rectangle(0, 0, 1200, 900);
-
+        spwn = new button(500, 100, "Spawn Soldier", 50, 1);
+        bases = "lvl " + basei;
     }
 
     public void update(GameContainer gc, int i) throws SlickException {
         if (spwn.isHit(gc) == true) {
             humsoldier.add(new human(270, 637, "data/lof.png"));
         }
+        bases = "lvl " + basei;
+        spwn.update(50, soldieri);
+        
     }
 
     public void render(GameContainer gc, Graphics g) throws SlickException {
@@ -48,17 +52,20 @@ public class test extends BasicGame {
         pbase.draw();
         pfarm.draw();
         spwn.draw(g);
-        p.draw(var);
-        System.out.println(var);
+        p.draw();
+        System.out.println();
         for (soldier s : humsoldier) {
             s.move(p.getHitbox());
-            s.draw(var);
+            s.draw();
             if (s.attack(p.getHitbox()) == true) {
-                var = false;
+                s.stopani();
                 s.attackdraw();
             }
 
         }
+        
+         g.setColor(Color.red);
+         g.drawString(bases, 220, 480);
 
     }
 
