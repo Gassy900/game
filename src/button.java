@@ -26,14 +26,11 @@ public class button {
         g.setColor(Color.white);
         g.drawString(s, xloc + 5, yloc + 5);
         g.drawString(s2, xloc + 5, yloc + 25);
-
     }
 
-    public boolean isHit(GameContainer gc) {
-        Input in = gc.getInput();
-        int mx = in.getMouseX();
-        int my = in.getMouseY();
-        if (in.isMousePressed(Input.MOUSE_LEFT_BUTTON) &&b.contains(mx, my)) {
+    public boolean isHit(int mx, int my) {
+        if (b.contains(mx, my)) {
+            
             return true;
         } else {
             return false;

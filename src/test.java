@@ -8,10 +8,12 @@ public class test extends BasicGame {
     soldier s, p;
     structure hbase, hfarm, pbase, pfarm;
     Rectangle grass, sky;
-    button spwn,baseup,farmup;
+    button spwn, baseup, farmup;
     ArrayList<soldier> humsoldier = new ArrayList<soldier>();
-    String bases, farms, soldiers;
+    String bases, farms, soldiers, PointsS;
     int basei = 1, farmi = 1, soldieri = 1;
+    int humtimer = 0, humpoints = 1;
+    int cost = 10;
 
     public test(String title) {
         super(title);
@@ -28,23 +30,44 @@ public class test extends BasicGame {
         grass = new Rectangle(0, 700, 1200, 200);
         sky = new Rectangle(0, 0, 1200, 900);
         spwn = new button(500, 100, "Spawn Soldier", 50, 1);
-        baseup = new button(50,100,"Upgrade Base", 50, 1);
-        farmup = new button(275,100,"Upgrade Farm", 50, 1);
+        baseup = new button(50, 100, "Upgrade Base", 10, 1);
+        farmup = new button(275, 100, "Upgrade Farm", 50, 1);
         bases = "lvl " + basei;
         farms = "lvl " + farmi;
         soldiers = "lvl " + soldieri;
-        
+        PointsS = "Pts " + humpoints;
+
     }
 
     public void update(GameContainer gc, int i) throws SlickException {
-        if (spwn.isHit(gc) == true) {
-            humsoldier.add(new human(270, 637, "data/lof.png"));
+        Input in = gc.getInput();
+        int mx = in.getMouseX();
+        int my = in.getMouseY();
+
+        if (in.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+            if (spwn.isHit(mx, my) == true) {
+                humsoldier.add(new human(270, 637, "data/lof.png"));
+            }
+            if (baseup.isHit(mx, my) == true) {
+                hbase.pointvar(humpoints, basei);
+                cost = hbase.returnCost();
+                basei= hbase.returnLevel();
+                baseup.update(cost, basei);
+            }
+            
         }
+
         bases = "lvl " + basei;
         farms = "lvl " + farmi;
         soldiers = "lvl " + soldieri;
-        spwn.update(50, soldieri);
-        
+        //spwn.update(50, soldieri);
+        humtimer++;
+        if (humtimer == 100) {
+            humpoints += hbase.returnVal();
+            humtimer = 0;
+        }
+        PointsS = "Pts " + humpoints;
+
     }
 
     public void render(GameContainer gc, Graphics g) throws SlickException {
@@ -62,21 +85,21 @@ public class test extends BasicGame {
         baseup.draw(g);
         farmup.draw(g);
         p.draw();
-        System.out.println();
         for (soldier s : humsoldier) {
             s.move(p.getHitbox());
             s.draw();
             g.setColor(Color.red);
-            g.drawString(soldiers,s.getX(),600);
+            g.drawString(soldiers, s.getX(), 600);
             if (s.attack(p.getHitbox()) == true) {
                 s.stopani();
                 s.attackdraw();
             }
         }
-        
-         g.setColor(Color.red);
-         g.drawString(bases, 220, 480);
-         
+
+        g.setColor(Color.red);
+        g.drawString(bases, 220, 480);
+        g.setColor(Color.red);
+        g.drawString(PointsS, 220, 300);
 
     }
 

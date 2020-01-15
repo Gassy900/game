@@ -42,7 +42,7 @@ public abstract class soldier {
         ani.start();
         hitbox = new Rectangle(xloc, yloc, 64, 64);
         ani.draw(hitbox.getX(), hitbox.getY());
-            System.out.println(var);
+            
         }
     }
     
@@ -57,7 +57,7 @@ public abstract class soldier {
     public void stopani(){
         ani.stop();
         var=false;
-        System.out.println(var);
+        
     }
 
 

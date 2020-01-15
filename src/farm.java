@@ -8,8 +8,15 @@ public class farm extends structure {
     }
 
     @Override
-    public boolean pointvar(int cost, int lvl) {
+    public void pointvar(int cost, int lvl) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void costcalc() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+ 
     
 }
