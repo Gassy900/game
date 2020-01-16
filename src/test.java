@@ -9,7 +9,9 @@ public class test extends BasicGame {
     structure hbase, hfarm, pbase, pfarm;
     Rectangle grass, sky;
     button spwn, baseup, farmup;
+    CPU cpu;
     ArrayList<soldier> humsoldier = new ArrayList<soldier>();
+    ArrayList<soldier> pigsoldier = new ArrayList<soldier>();
     String bases, farms, soldiers, PointsS;
     int basei = 1, farmi = 1, soldieri = 1;
     int humtimer = 0, humpoints = 1;
@@ -21,12 +23,13 @@ public class test extends BasicGame {
     }
 
     public void init(GameContainer gc) throws SlickException {
-        s = new human(270, 637, "data/lof.png");
+    
         p = new pig(870, 647, "data/Pig.png");
         hbase = new base(200, 500, "data/baseh.png");
         hfarm = new farm(0, 500, "data/Farm.png");
         pfarm = new farm(1000, 500, "data/Farm.png");
         pbase = new base(800, 500, "data/basep.png");
+        cpu = new CPU(1,1,1,1);
 
         grass = new Rectangle(0, 700, 1200, 200);
         sky = new Rectangle(0, 0, 1200, 900);
@@ -52,7 +55,7 @@ public class test extends BasicGame {
                     humsoldier.add(new human(270, 637, "data/lof.png"));
                     humpoints -= costs;
                     if (soldvar == 3) {
-                        costs += 500;
+                        costs += 5000;
                         soldieri++;
                         spwn.update(costs, soldieri);
                         soldvar = 0;
@@ -77,8 +80,13 @@ public class test extends BasicGame {
                 farmi = hbase.returnLevel();
                 farmup.update(costf, farmi);
             }
-
         }
+           cpu.timer();
+            if(cpu.spawnenemy()==true){
+                 pigsoldier.add(new pig(870, 647, "data/Pig.png"));
+            }
+
+        
 
         bases = "lvl " + basei;
         farms = "lvl " + farmi;
@@ -106,8 +114,8 @@ public class test extends BasicGame {
         spwn.draw(g);
         baseup.draw(g);
         farmup.draw(g);
-        p.draw();
-        for (soldier s : humsoldier) {
+        for (int i = 0; i < humsoldier.size(); i++) {
+            soldier s = humsoldier.get(i);
             s.move(p.getHitbox());
             s.draw();
             g.setColor(Color.red);
@@ -115,6 +123,17 @@ public class test extends BasicGame {
             if (s.attack(p.getHitbox()) == true) {
                 s.stopani();
                 s.attackdraw();
+            }
+        }
+        for (int i = 0; i < pigsoldier.size(); i++) {
+            soldier p = pigsoldier.get(i);
+            p.move(s.getHitbox());
+            p.draw();
+            g.setColor(Color.red);
+            g.drawString(soldiers, p.getX(), 600);
+            if (p.attack(s.getHitbox()) == true) {
+                p.stopani();
+                p.attackdraw();
             }
         }
 

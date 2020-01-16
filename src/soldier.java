@@ -14,6 +14,7 @@ public abstract class soldier {
     protected Animation ani, attani;
     protected int xloc, yloc;
     protected boolean var = true;
+    protected boolean isdead = false;
 
     public soldier(int x, int y, String s) throws SlickException {
         soldspr = new SpriteSheet(s, 64, 64);
@@ -69,6 +70,10 @@ public abstract class soldier {
     }
     public int getX(){
         return xloc;
+    }
+    
+    public boolean death(){
+        return isdead;
     }
 
 
