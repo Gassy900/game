@@ -13,7 +13,8 @@ public class test extends BasicGame {
     String bases, farms, soldiers, PointsS;
     int basei = 1, farmi = 1, soldieri = 1;
     int humtimer = 0, humpoints = 1;
-    int cost = 10;
+    int cost = 10, costf = 100, costs = 500;
+    int soldvar = 0;
 
     public test(String title) {
         super(title);
@@ -29,9 +30,9 @@ public class test extends BasicGame {
 
         grass = new Rectangle(0, 700, 1200, 200);
         sky = new Rectangle(0, 0, 1200, 900);
-        spwn = new button(500, 100, "Spawn Soldier", 50, 1);
+        spwn = new button(500, 100, "Spawn Soldier", 500, 1);
         baseup = new button(50, 100, "Upgrade Base", 10, 1);
-        farmup = new button(275, 100, "Upgrade Farm", 50, 1);
+        farmup = new button(275, 100, "Upgrade Farm", 100, 1);
         bases = "lvl " + basei;
         farms = "lvl " + farmi;
         soldiers = "lvl " + soldieri;
@@ -46,24 +47,45 @@ public class test extends BasicGame {
 
         if (in.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
             if (spwn.isHit(mx, my) == true) {
-                humsoldier.add(new human(270, 637, "data/lof.png"));
+                if (humpoints >= costs) {
+                    soldvar += 1;
+                    humsoldier.add(new human(270, 637, "data/lof.png"));
+                    humpoints -= costs;
+                    if (soldvar == 3) {
+                        costs += 500;
+                        soldieri++;
+                        spwn.update(costs, soldieri);
+                        soldvar = 0;
+                    }
+                }
             }
             if (baseup.isHit(mx, my) == true) {
                 hbase.pointvar(humpoints, basei);
+                if (hbase.paydept() == true) {
+                    humpoints -= cost;
+                }
                 cost = hbase.returnCost();
-                basei= hbase.returnLevel();
+                basei = hbase.returnLevel();
                 baseup.update(cost, basei);
             }
-            
+            if (farmup.isHit(mx, my) == true) {
+                hfarm.pointvar(humpoints, farmi);
+                if (hfarm.paydept() == true) {
+                    humpoints -= costf;
+                }
+                costf = hfarm.returnCost();
+                farmi = hbase.returnLevel();
+                farmup.update(costf, farmi);
+            }
+
         }
 
         bases = "lvl " + basei;
         farms = "lvl " + farmi;
         soldiers = "lvl " + soldieri;
-        //spwn.update(50, soldieri);
         humtimer++;
         if (humtimer == 100) {
-            humpoints += hbase.returnVal();
+            humpoints += (hbase.returnVal() * hfarm.returnVal());
             humtimer = 0;
         }
         PointsS = "Pts " + humpoints;
@@ -98,6 +120,7 @@ public class test extends BasicGame {
 
         g.setColor(Color.red);
         g.drawString(bases, 220, 480);
+        g.drawString(farms, 10, 500);
         g.setColor(Color.red);
         g.drawString(PointsS, 220, 300);
 

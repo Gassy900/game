@@ -10,6 +10,7 @@ public abstract class structure {
     protected int loccost = 10;
     protected int loclevel;
     protected int strcutlvl=1;
+    protected boolean dept=false;
     
     public structure(int x, int y, String s) throws SlickException{
         base = new Image(s);
@@ -33,6 +34,9 @@ public abstract class structure {
     }
     public int returnLevel(){
         return strcutlvl;
+    }
+    public boolean paydept(){
+        return dept;
     }
     
 }
