@@ -14,10 +14,9 @@ public class human extends soldier{
     public void move(Rectangle var) {
         if(hitbox.intersects(var)){
             ani.stop();
-            isdead=true;
         } else{
-           xloc+=1;
-           isdead=false;
+            xloc+=1;
+            isdead=false;
         }
     }
     

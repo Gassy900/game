@@ -13,7 +13,6 @@ public class pig extends soldier {
     public void move(Rectangle var) {
          if(hitbox.intersects(var)){
             xloc=xloc;
-            isdead=true;
         } else{
            xloc-=1;
            isdead=false;

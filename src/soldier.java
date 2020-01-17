@@ -13,8 +13,10 @@ public abstract class soldier {
     protected Image attack[] = new Image[3];
     protected Animation ani, attani;
     protected int xloc, yloc;
-    protected boolean var = true;
+    protected boolean varv = true;
     protected boolean isdead = false;
+    protected int health = 10, dam = 1;
+    protected int timer =0;
 
     public soldier(int x, int y, String s) throws SlickException {
         soldspr = new SpriteSheet(s, 64, 64);
@@ -36,31 +38,40 @@ public abstract class soldier {
         soldspr2.endUse();
         hitbox = new Rectangle(xloc, yloc, 64, 64);
     }
+
     abstract public void move(Rectangle var);
 
     public void draw() {
-        if(var==true){
-        ani.start();
-        hitbox = new Rectangle(xloc, yloc, 64, 64);
-        ani.draw(hitbox.getX(), hitbox.getY());
-            
+        if (varv == true) {
+            ani.start();
+            hitbox = new Rectangle(xloc, yloc, 64, 64);
+            ani.draw(hitbox.getX(), hitbox.getY());
+
         }
     }
-    
-    public boolean attack(Rectangle Var){
-       if(hitbox.intersects(Var)){
+
+    public boolean attack(Rectangle Var) {
+        if (hitbox.intersects(Var)) {
             return true;
-        } else{
+        } else {
             return false;
-        }   
-    }
-    
-    public void stopani(){
-        ani.stop();
-        var=false;
-        
+        }
     }
 
+    public void stopani() {
+        ani.stop();
+        varv = false;
+
+    }
+
+    public void healthdam() {
+        dam += 5;
+        health += 20;
+    }
+
+    public int returnDam() {
+        return dam;
+    }
 
     public void attackdraw() {
 
@@ -68,14 +79,29 @@ public abstract class soldier {
         hitbox = new Rectangle(xloc, yloc, 64, 64);
         attani.draw(hitbox.getX(), hitbox.getY());
     }
-    public int getX(){
-        return xloc;
-    }
     
-    public boolean death(){
-        return isdead;
+    
+    public void deathcalc(int dam){
+        
+        System.out.println(timer);
+        if(timer==100){
+            health-=dam;
+        }
+        if(health <=0){
+            isdead=true;
+        }
+        else{
+            isdead=false;
+        }
     }
 
+    public int getX() {
+        return xloc;
+    }
+
+    public boolean death() {
+        return isdead;
+    }
 
     public Rectangle getHitbox() {
         return hitbox;

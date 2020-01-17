@@ -5,9 +5,8 @@ import org.newdawn.slick.geom.Rectangle;
 
 public class test extends BasicGame {
 
-    soldier s, p;
     structure hbase, hfarm, pbase, pfarm;
-    Rectangle grass, sky;
+    Rectangle grass, sky, hbox, pbox;
     button spwn, baseup, farmup;
     CPU cpu;
     ArrayList<soldier> humsoldier = new ArrayList<soldier>();
@@ -17,19 +16,22 @@ public class test extends BasicGame {
     int humtimer = 0, humpoints = 1;
     int cost = 10, costf = 100, costs = 500;
     int soldvar = 0;
+    int pigdam = 1, humdam = 1;
+    boolean car=false;
 
     public test(String title) {
         super(title);
     }
 
     public void init(GameContainer gc) throws SlickException {
-    
-        p = new pig(870, 647, "data/Pig.png");
+
         hbase = new base(200, 500, "data/baseh.png");
         hfarm = new farm(0, 500, "data/Farm.png");
         pfarm = new farm(1000, 500, "data/Farm.png");
         pbase = new base(800, 500, "data/basep.png");
-        cpu = new CPU(1,1,1,1);
+        cpu = new CPU(1, 1, 1, 1);
+        pbox = new Rectangle(10, 10, 10, 10);
+        hbox = new Rectangle(10, 10, 10, 10);
 
         grass = new Rectangle(0, 700, 1200, 200);
         sky = new Rectangle(0, 0, 1200, 900);
@@ -57,11 +59,13 @@ public class test extends BasicGame {
                     if (soldvar == 3) {
                         costs += 5000;
                         soldieri++;
+                        car=true;
                         spwn.update(costs, soldieri);
                         soldvar = 0;
                     }
                 }
             }
+      
             if (baseup.isHit(mx, my) == true) {
                 hbase.pointvar(humpoints, basei);
                 if (hbase.paydept() == true) {
@@ -81,12 +85,10 @@ public class test extends BasicGame {
                 farmup.update(costf, farmi);
             }
         }
-           cpu.timer();
-            if(cpu.spawnenemy()==true){
-                 pigsoldier.add(new pig(870, 647, "data/Pig.png"));
-            }
-
-        
+        cpu.timer();
+        if (cpu.spawnenemy() == true) {
+            pigsoldier.add(new pig(870, 647, "data/Pig.png"));
+        }
 
         bases = "lvl " + basei;
         farms = "lvl " + farmi;
@@ -116,22 +118,34 @@ public class test extends BasicGame {
         farmup.draw(g);
         for (int i = 0; i < humsoldier.size(); i++) {
             soldier s = humsoldier.get(i);
-            s.move(p.getHitbox());
+            hbox = s.getHitbox();
+            s.move(pbox);
+            if(car==true){
+                s.healthdam();
+                car=false;
+            }
+            humdam = s.returnDam();
             s.draw();
             g.setColor(Color.red);
             g.drawString(soldiers, s.getX(), 600);
-            if (s.attack(p.getHitbox()) == true) {
+            if (s.attack(pbox) == true) {
                 s.stopani();
                 s.attackdraw();
+                s.deathcalc(pigdam);
+            }
+            if(s.death()==true){
+                humsoldier.remove(s);
             }
         }
         for (int i = 0; i < pigsoldier.size(); i++) {
             soldier p = pigsoldier.get(i);
-            p.move(s.getHitbox());
+            pbox = p.getHitbox();
+            p.move(hbox);
             p.draw();
+            pigdam = p.returnDam();
             g.setColor(Color.red);
             g.drawString(soldiers, p.getX(), 600);
-            if (p.attack(s.getHitbox()) == true) {
+            if (p.attack(hbox) == true) {
                 p.stopani();
                 p.attackdraw();
             }

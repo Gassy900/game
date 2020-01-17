@@ -9,7 +9,7 @@ public class CPU {
     }
     
     public boolean spawnenemy(){
-        if(timer==1000){
+        if(timer==7000){
             timer=0;
             return true;
         }
@@ -18,6 +18,6 @@ public class CPU {
     
     public void timer(){
         timer++;
-        System.out.println(timer);
+        
     }
 }
