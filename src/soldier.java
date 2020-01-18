@@ -17,6 +17,7 @@ public abstract class soldier {
     protected boolean isdead = false;
     protected int health = 10, dam = 1;
     protected int timer =0;
+    
 
     public soldier(int x, int y, String s) throws SlickException {
         soldspr = new SpriteSheet(s, 64, 64);
@@ -49,6 +50,7 @@ public abstract class soldier {
 
         }
     }
+    
 
     public boolean attack(Rectangle Var) {
         if (hitbox.intersects(Var)) {
@@ -82,19 +84,27 @@ public abstract class soldier {
     
     
     public void deathcalc(int dam){
-        
-        System.out.println(timer);
+        timer++;
         if(timer==100){
             health-=dam;
+            timer=0;
         }
         if(health <=0){
+            System.out.println();
             isdead=true;
         }
         else{
             isdead=false;
         }
     }
-
+    
+    public void startani(){
+        ani.start();
+    }
+    public void stopatt(){
+        varv=true;
+        attani.stop();
+    }
     public int getX() {
         return xloc;
     }

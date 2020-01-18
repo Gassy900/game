@@ -38,5 +38,8 @@ public abstract class structure {
     public boolean paydept(){
         return dept;
     }
+    public Rectangle gethit(){
+        return hitbox;
+    }
     
 }

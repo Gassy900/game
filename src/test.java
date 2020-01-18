@@ -11,13 +11,13 @@ public class test extends BasicGame {
     CPU cpu;
     ArrayList<soldier> humsoldier = new ArrayList<soldier>();
     ArrayList<soldier> pigsoldier = new ArrayList<soldier>();
-    String bases, farms, soldiers, PointsS;
-    int basei = 1, farmi = 1, soldieri = 1;
+    String bases, farms, soldiers, pigs, PointsS;
+    int basei = 1, farmi = 1, soldieri = 1,pigi=1;
     int humtimer = 0, humpoints = 1;
     int cost = 10, costf = 100, costs = 500;
     int soldvar = 0;
     int pigdam = 1, humdam = 1;
-    boolean car=false;
+    boolean car=false,hvar=false,pvar=false;
 
     public test(String title) {
         super(title);
@@ -30,8 +30,8 @@ public class test extends BasicGame {
         pfarm = new farm(1000, 500, "data/Farm.png");
         pbase = new base(800, 500, "data/basep.png");
         cpu = new CPU(1, 1, 1, 1);
-        pbox = new Rectangle(10, 10, 10, 10);
-        hbox = new Rectangle(10, 10, 10, 10);
+        pbox = new Rectangle(0, 0, 0, 0);
+        hbox = new Rectangle(0, 0, 0, 0);
 
         grass = new Rectangle(0, 700, 1200, 200);
         sky = new Rectangle(0, 0, 1200, 900);
@@ -41,6 +41,7 @@ public class test extends BasicGame {
         bases = "lvl " + basei;
         farms = "lvl " + farmi;
         soldiers = "lvl " + soldieri;
+        pigs = "lvl " + pigi;
         PointsS = "Pts " + humpoints;
 
     }
@@ -94,7 +95,7 @@ public class test extends BasicGame {
         farms = "lvl " + farmi;
         soldiers = "lvl " + soldieri;
         humtimer++;
-        if (humtimer == 100) {
+        if (humtimer == 5) {
             humpoints += (hbase.returnVal() * hfarm.returnVal());
             humtimer = 0;
         }
@@ -132,11 +133,23 @@ public class test extends BasicGame {
                 s.stopani();
                 s.attackdraw();
                 s.deathcalc(pigdam);
+                   if(hvar=true){
+                    s.stopatt();
+                    s.move(pbox);
+                    s.draw();
+                }
             }
             if(s.death()==true){
                 humsoldier.remove(s);
+                pbox = new Rectangle(0,0,0,0);
+                pvar=true;
+            }
+            
+            if(hbox.intersects(pbase.gethit())){
+              humsoldier.remove(s);
             }
         }
+        
         for (int i = 0; i < pigsoldier.size(); i++) {
             soldier p = pigsoldier.get(i);
             pbox = p.getHitbox();
@@ -144,10 +157,25 @@ public class test extends BasicGame {
             p.draw();
             pigdam = p.returnDam();
             g.setColor(Color.red);
-            g.drawString(soldiers, p.getX(), 600);
+            g.drawString(pigs, p.getX(), 600);
             if (p.attack(hbox) == true) {
                 p.stopani();
                 p.attackdraw();
+                p.deathcalc(humdam);
+                if(pvar=true){
+                    p.stopatt();
+                    p.move(hbox);
+                    p.draw();
+                }
+            }
+            if(p.death()==true){
+                pigsoldier.remove(p);
+                hbox = new Rectangle(0,0,0,0);
+                hvar=true;
+            }
+            
+            if(pbox.intersects(hbase.gethit())){
+              pigsoldier.remove(p);
             }
         }
 
