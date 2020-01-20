@@ -24,6 +24,7 @@ public class base extends structure {
         if (lvl == 2 && cost >= 250) {
             var = 20;
             strcutlvl++;
+            loclevel++;
             costcalc();
             dept=true;
         }
@@ -42,7 +43,7 @@ public class base extends structure {
             dept=true;
         }
 
-        if (lvl == 5 && cost >= 500000) {
+        if (lvl == 5 && cost >= 100000) {
             var = 400;
             strcutlvl++;
             loclevel++;
@@ -68,7 +69,7 @@ public class base extends structure {
             loccost=50000;
         }
         if (loclevel == 5){
-            loccost=500000;
+            loccost=100000;
         }
     }
 

@@ -43,7 +43,7 @@ public abstract class soldier {
     abstract public void move(Rectangle var);
 
     public void draw() {
-        if (varv == true) {
+       if (varv == true) {
             ani.start();
             hitbox = new Rectangle(xloc, yloc, 64, 64);
             ani.draw(hitbox.getX(), hitbox.getY());
@@ -88,6 +88,7 @@ public abstract class soldier {
         if(timer==100){
             health-=dam;
             timer=0;
+           
         }
         if(health <=0){
             System.out.println();

@@ -29,8 +29,7 @@ public class button {
     }
 
     public boolean isHit(int mx, int my) {
-        if (b.contains(mx, my)) {
-            
+        if (b.contains(mx, my)) {   
             return true;
         } else {
             return false;

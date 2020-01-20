@@ -24,6 +24,7 @@ public class farm extends structure {
         if (lvl == 2 && cost >= 2000) {
             var = 4;
             strcutlvl++;
+            loclevel++;
             costcalc();
             dept=true;
         }
@@ -42,7 +43,7 @@ public class farm extends structure {
             dept=true;
         }
 
-        if (lvl == 5 && cost >= 1000000) {
+        if (lvl == 5 && cost >= 200000) {
             var = 20;
             strcutlvl++;
             loclevel++;
@@ -50,7 +51,6 @@ public class farm extends structure {
             dept=true;
         }
        
-
     
     }
 
@@ -69,7 +69,7 @@ public class farm extends structure {
             loccost=25000;
         }
         if (loclevel == 5){
-            loccost=1000000;
+            loccost=200000;
         }
     }
     }
