@@ -17,7 +17,7 @@ public class CPU {
     }
     
     public void baseup(int locpo){
-        if(locpo >= 500000 ){
+        if(locpo >= 100000 ){
             baselevel = 6;
             desc = 400;
         }
@@ -43,7 +43,7 @@ public class CPU {
     }
     
     public void farmup(int locpo){
-        if(locpo >= 1000000){
+        if(locpo >= 200000){
             farmlevel = 6;
             farm=20;
         }
